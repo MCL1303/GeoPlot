@@ -1,1 +1,1 @@
-To get facts from file run `tomitaparser config.proto`
+To get facts from file run `tomitaparser config.proto < $file`
