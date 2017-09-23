@@ -1,1 +1,1 @@
-To get facts from file run `tomitaparser config.proto < $file`
+To get facts from file in test\data\input run `extract $file` in **this** directory

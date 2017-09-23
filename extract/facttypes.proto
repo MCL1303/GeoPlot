@@ -1,1 +1,6 @@
-// write here fact types
+import "base.proto";
+import "facttypes_base.proto";
+
+message Point : NFactType.TFact  {
+	optional string Name = 1;
+}
