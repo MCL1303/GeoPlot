@@ -5,5 +5,5 @@ import "articles_base.proto";
 import "Facttypes.proto";
 
 TAuxDicArticle "точка" {
-	key = { "tomita:Point.cxx" type=CUSTOM }
+  key = { "tomita:Point.cxx" type=CUSTOM }
 }
