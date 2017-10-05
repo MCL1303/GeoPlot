@@ -1,1 +1,4 @@
-tomitaparser config.proto < ../test/data/input/$0 > ../test/data/output/$(basename $0 .txt).xml
+echo $*
+cd $mcode/GeoPlot/extract
+
+tomitaparser config.proto < ../test/data/input/$1 > ../test/data/output/$(basename $1 .txt).xml
