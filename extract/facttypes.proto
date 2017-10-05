@@ -1,6 +1,6 @@
 import "base.proto";
 import "facttypes_base.proto";
 
-message Point : NFactType.TFact {
-  optional string Name = 1;
+message Point : NFactType.TFact  {
+	optional string Name = 1;
 }
