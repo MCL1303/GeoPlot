@@ -1,0 +1,19 @@
+encoding "utf-8";
+
+TTextMinerConfig {
+  Dictionary = "mydic.gzt";
+
+  PrettyOutput = "pr.html";
+
+  Articles = [
+    { Name = "точка" }
+  ]
+
+  Facts = [
+    { Name = "Point" }
+  ]
+
+  Output = {
+    Format = xml;
+  }
+}

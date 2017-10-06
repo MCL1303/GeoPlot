@@ -1,0 +1,1 @@
+tomitaparser config.proto < ../test/data/input/$1 > ../test/data/output/$(basename $1 .txt).xml
