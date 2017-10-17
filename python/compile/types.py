@@ -1,0 +1,1 @@
+{'float', 'Segment', 'Point', 'string', 'Triangle'}
