@@ -7,10 +7,14 @@ TTextMinerConfig {
 
   Articles = [
     { Name = "точка" }
+    { Name = "отрезок" }
+    { Name = "треугольник" }
   ]
 
   Facts = [
     { Name = "Point" }
+    { Name = "Segment" }
+    { Name = "Triangle" }
   ]
 
   Output = {

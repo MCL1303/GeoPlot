@@ -2,8 +2,24 @@ encoding "utf-8";
 
 import "base.proto";
 import "articles_base.proto";
-import "Facttypes.proto";
+import "facttypes.proto";
+
+TAuxDicArticle "отрезок_название" {
+  key = "отрезок" | "сторона"
+}
+
+TAuxDicArticle "равно" {
+  key = "равно" | "="
+}
 
 TAuxDicArticle "точка" {
-  key = { "tomita:Point.cxx" type=CUSTOM }
+  key = { "tomita:grammars\\Point.cxx" type=CUSTOM }
+}
+
+TAuxDicArticle "отрезок" {
+  key = { "tomita:grammars\\Segment.cxx" type=CUSTOM }
+}
+
+TAuxDicArticle "треугольник" {
+  key = { "tomita:grammars\\Triangle.cxx" type=CUSTOM }
 }
