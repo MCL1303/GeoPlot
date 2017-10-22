@@ -1,7 +1,7 @@
 encoding "utf-8";
 
 TTextMinerConfig {
-  Dictionary = "mydic.gzt";
+  Dictionary = "config\\mydic.gzt";
 
   PrettyOutput = "pr.html";
 
