@@ -1,3 +1,9 @@
-To get facts from file in `test/data/input` run `extract $file` (on UNIX run `./extract $file`) in **this** directory.
+To get facts from files in `test/data/input` run `extract $files` (on UNIX run `./extract $files`) in **this** directory.
 
-`tomitaparser` **have to be** in PATH (`/usr/bin`)
+To extract facts from all files in `test/data/input` run `extract -a` (on UNIX -- `./extract -a`).
+
+To normalize **and extract** facts from files run `extract -n $files` (`$files` could be `-a` or empty: `-a` will be used as default).
+
+You can combine the options (`-an`, `-na`).
+
+`tomitaparser` (or `tomita-$platfrom_name`) **have to be** in PATH (`/usr/bin`)
