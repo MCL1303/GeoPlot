@@ -4,7 +4,7 @@ from os.path import basename as bn, split as sp, dirname as dn, realpath as rp, 
 
 lst = ["tomitaparser"]
 def findc(cmd):
-    return os.system("command -v " + cmd) == 0
+    return os.system("command -v >/dev/null " + cmd) == 0
 if sys.platform.startswith("linux"):
     lst += ["tomita-linux32", "tomita-linux64"]
 elif sys.platform.startswith("freebsd"):
