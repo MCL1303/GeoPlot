@@ -1,75 +1,75 @@
 import sys, os
 from glob import iglob
-from os.path import basename as bn, split as sp, dirname as dn, realpath as rp, join, splitext as spe
+import os.path
 
-lst = ["tomitaparser"]
+list_of_possible_commands = ["tomitaparser"]
 def findc(cmd):
     return os.system("command -v >/dev/null " + cmd) == 0
 if sys.platform.startswith("linux"):
-    lst += ["tomita-linux32", "tomita-linux64"]
+    list_of_possible_commands += ["tomita-linux32", "tomita-linux64"]
 elif sys.platform.startswith("freebsd"):
-    lst += ["tomita-freebsd64"]
+    list_of_possible_commands += ["tomita-freebsd64"]
 elif sys.platform.startswith("darwin"):
-    lst += ["tomita-mac"]
+    list_of_possible_commands += ["tomita-mac"]
 elif sys.platform.startswith("win"):
-    lst += ["tomita-win32"]
+    list_of_possible_commands += ["tomita-win32"]
     def _findc(cmd):
         return os.system("where /q " + cmd) == 0
     findc = _findc
 
 try:
-    cmd = next(x for x in lst if findc(x))
+    cmd = next(x for x in list_of_possible_commands if findc(x))
 except StopIteration:
     print("Error: tomita parser not found!")
     exit(1)
 
-dnrp = dn(rp(__file__))
-mpath = join(dnrp, "..", "test", "data")
+dnrp = os.path.dirname(os.path.realpath(__file__))
+mpath = os.path.join(dnrp, "..", "test", "data")
 
-mall = False
-norm = False
-mran = []
+all_flag = False
+normalize_flag = False
+range_of_files = []
 for i in sys.argv[1:]:
     if i[0] == '-':
-        if i.find('a') != -1: mall = True
-        if i.find('n') != -1: norm = True
-    else: mran.append(i)
+        if i.find('a') != -1: all_flag = True
+        if i.find('n') != -1: normalize_flag = True
+    else: range_of_files.append(i)
 
 def _ext(file):
-    outname = join(mpath, "intermediate_output", spe(bn(file))[0] + ".xml")
+    outname = os.path.join(mpath, "intermediate_output", os.path.splitext(os.path.basename(file))[0] + ".xml")
     if os.system(cmd + " " +\
-        join("config", "config.proto") +\
-        " <" + join(mpath, "input", file) +\
+        os.path.join("config", "config.proto") +\
+        " <" + os.path.join(mpath, "input", file) +\
         " >" + outname) != 0:
         print("Error: failed while extracting file " + file + "!")
         exit(2)
     return outname
 proc = _ext
 
-if norm:
+if normalize_flag:
     def _proc(file):
         file = _ext(file)
-        if os.system("python " + join(dnrp, "normalize.py") +\
-            " " + file + " " + join(mpath, "normalized_output", bn(file))) != 0:
+        if os.system(sys.executable + " " + os.path.join(dnrp, "normalize.py") +\
+            " " + file + " " + os.path.join(mpath, "normalized_output", os.path.basename(file))) != 0:
             print("Error: failed while normalizing file " + file + "!")
             exit(3)
-    if not mran:
-        if mall: mran = iglob(join(mpath, "input", "*.txt"))
+    if not range_of_files:
+        if all_flag: range_of_files = iglob(os.path.join(mpath, "input", "*.txt"))
         else:
-            mran = iglob(join(mpath, "intermediate_output", "*.xml"))
+            range_of_files = iglob(os.path.join(mpath, "intermediate_output", "*.xml"))
             def _2proc(file):
-                if os.system("python " + join(dnrp, "normalize.py") +\
-                    " " + file + " " + join(mpath, "normalized_output", spe(bn(file))[0] + ".xml")) != 0:
+                if os.system("python " + os.path.join(dnrp, "normalize.py") +\
+                    " " + file + " " + os.path.join(mpath, "normalized_output", os.path.splitext(os.path.basename(file))[0] + ".xml")) != 0:
                     print("Error: failed while normalizing file " + file + "!")
                     exit(3)
             _proc = _2proc
     proc = _proc
-elif not mran:
-    if mall: mran = iglob(join(mpath, "input", "*.txt"))
+elif not range_of_files:
+    if all_flag: range_of_files = iglob(os.path.join(mpath, "input", "*.txt"))
     else:
         print("Error: no files listed (nor used -a nor -n options)!")
         exit(4)
 
 
-for f in mran:
+for f in range_of_files:
     proc(f)
