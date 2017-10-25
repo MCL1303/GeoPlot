@@ -1,2 +1,2 @@
-<?xml version='1.0' encoding='cp1251'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <facts><Segment Names="BC" /><Point Name="F" /><Triangle Names="ABC" /><Point Name="M" /><Point Name="N" /><Segment Length="16" Names="AB" /><Segment Length="10" Names="CF" /><Point Name="F" /></facts>

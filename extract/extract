@@ -1,3 +1,6 @@
-pythonc=$(whereis python)
-pythonc=$(for i in ${pythonc##python:}; do if [[ "$i" != *-config ]]; then echo $i; break; fi; done;)
-[[ -n pythonc ]] && $pythonc extract.py $*
+command -v python3 >/dev/null && python3 extract.py $* || command -v python >/dev/null && {
+    a=$(python --version)
+    a=${a##Python}
+    a=${a%%.*}
+    [[ $a == 3 ]] && python extract.py $*
+}
