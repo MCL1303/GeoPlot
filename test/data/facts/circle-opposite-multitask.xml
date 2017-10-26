@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facts>
+  <Segment Names="AM"/>
+  <Point Name="P"/>
+  <Point Name="M"/>
+  <Point Name="B"/>
+  <Point Name="A"/>
+  <Point Name="C"/>
+  <Point Name="Q"/>
+  <Segment Names="AC"/>
+  <Segment Length="5" Names="PK"/>
+  <Point Name="K"/>
+  <Point Name="Q"/>
+</facts>
