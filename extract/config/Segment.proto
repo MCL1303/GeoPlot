@@ -2,6 +2,6 @@ import "base.proto";
 import "facttypes_base.proto";
 
 message Segment : NFactType.TFact {
-  optional string /* Point and Point */ Names = 1;
-  optional string /* length */ Length = 2;
+  optional string Names = 1;
+  optional string Length = 2;
 }
