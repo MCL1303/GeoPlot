@@ -13,13 +13,13 @@ TAuxDicArticle "равно" {
 }
 
 TAuxDicArticle "точка" {
-  key = { "tomita:..\\grammars\\Point.cxx" type=CUSTOM }
+  key = { "tomita:../grammars/Point.cxx" type=CUSTOM }
 }
 
 TAuxDicArticle "отрезок" {
-  key = { "tomita:..\\grammars\\Segment.cxx" type=CUSTOM }
+  key = { "tomita:../grammars/Segment.cxx" type=CUSTOM }
 }
 
 TAuxDicArticle "треугольник" {
-  key = { "tomita:..\\grammars\\Triangle.cxx" type=CUSTOM }
+  key = { "tomita:../grammars/Triangle.cxx" type=CUSTOM }
 }
