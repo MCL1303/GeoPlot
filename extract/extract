@@ -1,1 +1,9 @@
-tomitaparser config.proto < ../test/data/input/$1 > ../test/data/output/$(basename $1 .txt).xml
+command -v python3 >/dev/null && python3 extract.py $* || command -v python >/dev/null && {
+    a=$(python --version)
+    a=${a##Python}
+    a=${a%%.*}
+    [[ $a == 3 ]] && python extract.py $* || {
+    	echo Wrong python version ($a, requested: 3)!
+    	exit 5
+    }
+}
