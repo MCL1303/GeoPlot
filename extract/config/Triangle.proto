@@ -1,0 +1,6 @@
+import "base.proto";
+import "facttypes_base.proto";
+
+message Triangle : NFactType.TFact {
+  optional string /* Point and Point and Point */ Names = 1;
+}

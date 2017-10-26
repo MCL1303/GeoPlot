@@ -1,2 +1,4 @@
 *.bin
-test/data/output/*.xml
+test/data/intermediate_output/*.xml
+*.html
+__pycache__
