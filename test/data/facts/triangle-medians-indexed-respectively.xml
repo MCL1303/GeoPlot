@@ -1,2 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<facts><Triangle Names="ABC" /></facts>
+<?xml version="1.0" encoding="UTF-8"?>
+<facts>
+  <Triangle Names="ABC"/>
+</facts>
