@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-import sys, os
+import sys
+import os
 from glob import iglob
 import os.path
+
 
 def main():
     possible_commands = ["tomitaparser"]
@@ -18,7 +20,9 @@ def main():
         check_cmd = "where /q >nul 2>&1 "
 
     try:
-        cmd = next(x for x in possible_commands if os.system(check_cmd + x) == 0)
+        cmd = next(
+          x for x in possible_commands
+          if os.system(check_cmd + x) == 0)
     except StopIteration:
         print("Error: tomita parser not found!")
         exit(1)
@@ -32,9 +36,12 @@ def main():
         if i[0] == '*':
             all_flag = True
             break
-        else: range_of_files.append(i)
+        else:
+            range_of_files.append(i)
 
-    ext_cmd = (cmd + " " + os.path.join(program_dir, "config", "config.proto") +
+    ext_cmd = (
+        cmd + " " +
+        os.path.join(program_dir, "config", "config.proto") +
         " <\"" + os.path.join(mpath, "input", '') + "{0}.txt\" | \"" +
         sys.executable + "\" normalize.py" +
         " >\"" + os.path.join(mpath, "facts", '') + "{0}.xml\""
