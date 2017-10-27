@@ -2,4 +2,4 @@
 
 PointNames -> AnyWord<wff=/([A-Z][0-9]*){3}/>;
 
-Triangle -> "треугольник" PointNames interp(Triangle.Names);
+Triangle -> "треугольник" PointNames interp(Triangle.Vertices);

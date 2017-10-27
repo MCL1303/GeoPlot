@@ -2,5 +2,5 @@ import "base.proto";
 import "facttypes_base.proto";
 
 message Triangle : NFactType.TFact {
-  optional string Names = 1;
+  optional string Vertices = 1;
 }
