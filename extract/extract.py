@@ -28,6 +28,7 @@ def main():
         exit(1)
 
     program_dir = os.path.dirname(os.path.realpath(__file__))
+    os.chdir(program_dir)
     mpath = os.path.join(program_dir, "..", "test", "data")
 
     all_flag = False
@@ -55,11 +56,10 @@ def main():
             exit(4)
 
     for f in range_of_files:
-        print("Processing", f, "file")
+        sys.stderr.write("Processing " + f + " file\n")
         bnf = os.path.splitext(os.path.basename(f))[0]
         os.system(ext_cmd.format(bnf))
-        print("Processed", f, "file")
-        print()
+        sys.stderr.write("Processed " + f + " file\n\n")
 
 if __name__ == '__main__':
     main()
