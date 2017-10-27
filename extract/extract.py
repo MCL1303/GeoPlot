@@ -34,10 +34,11 @@ def main():
             break
         else: range_of_files.append(i)
 
-    ext_cmd = cmd + " " + os.path.join(program_dir, "config", "config.proto") +\
-        " <\"" + os.path.join(mpath, "input", '') + "{0}.txt\" | \"" +\
-        sys.executable + "\" normalize.py" +\
+    ext_cmd = (cmd + " " + os.path.join(program_dir, "config", "config.proto") +
+        " <\"" + os.path.join(mpath, "input", '') + "{0}.txt\" | \"" +
+        sys.executable + "\" normalize.py" +
         " >\"" + os.path.join(mpath, "facts", '') + "{0}.xml\""
+    )
 
     if not range_of_files:
         if all_flag:
