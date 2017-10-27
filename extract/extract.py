@@ -23,8 +23,8 @@ def main():
         print("Error: tomita parser not found!")
         exit(1)
 
-    dnrp = os.path.dirname(os.path.realpath(__file__))
-    mpath = os.path.join(dnrp, "..", "test", "data")
+    program_dir = os.path.dirname(os.path.realpath(__file__))
+    mpath = os.path.join(program_dir, "..", "test", "data")
 
     all_flag = False
     range_of_files = []
@@ -34,7 +34,7 @@ def main():
             break
         else: range_of_files.append(i)
 
-    ext_cmd = cmd + " " + os.path.join(dnrp, "config", "config.proto") +\
+    ext_cmd = cmd + " " + os.path.join(program_dir, "config", "config.proto") +\
         " <\"" + os.path.join(mpath, "input", '') + "{0}.txt\" | \"" +\
         sys.executable + "\" normalize.py" +\
         " >\"" + os.path.join(mpath, "facts", '') + "{0}.xml\""
