@@ -1,9 +1,0 @@
-command -v python3 >/dev/null && python3 extract.py $* || command -v python >/dev/null && {
-    a=$(python --version)
-    a=${a##Python}
-    a=${a%%.*}
-    [[ $a == 3 ]] && python extract.py $* || {
-    	echo Wrong python version ($a, requested: 3)!
-    	exit 5
-    }
-}
