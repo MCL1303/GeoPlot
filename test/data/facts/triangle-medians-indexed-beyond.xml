@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <facts>
-  <Triangle Vertices="ABC"/>
-  <Segment EndPoints="C1C2"/>
+  <Triangle Names="ABC"/>
+  <Segment Names="C1C2"/>
   <Point Name="C1"/>
 </facts>

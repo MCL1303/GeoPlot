@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <facts>
-  <Triangle Vertices="ABC"/>
+  <Triangle Names="ABC"/>
   <Point Name="B"/>
   <Point Name="C"/>
   <Point Name="A"/>

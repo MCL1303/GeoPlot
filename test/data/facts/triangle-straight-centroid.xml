@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <facts>
-  <Segment EndPoints="MN" Length="6"/>
-  <Segment EndPoints="NP" Length="3"/>
-  <Triangle Vertices="MNP"/>
+  <Segment Length="6" Names="MN"/>
+  <Segment Length="3" Names="NP"/>
+  <Triangle Names="MNP"/>
   <Point Name="N"/>
-  <Segment EndPoints="MP"/>
+  <Segment Names="MP"/>
   <Point Name="K"/>
-  <Triangle Vertices="MNK"/>
+  <Triangle Names="MNK"/>
   <Point Name="A"/>
   <Point Name="B"/>
-  <Triangle Vertices="NAB"/>
+  <Triangle Names="NAB"/>
 </facts>

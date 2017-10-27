@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <facts>
-  <Segment EndPoints="AC"/>
-  <Triangle Vertices="ABC"/>
-  <Segment EndPoints="AB"/>
+  <Segment Names="AC"/>
+  <Triangle Names="ABC"/>
+  <Segment Names="AB"/>
   <Point Name="K"/>
   <Point Name="L"/>
-  <Triangle Vertices="ABC"/>
+  <Triangle Names="ABC"/>
   <Point Name="M"/>
   <Point Name="I"/>
 </facts>
