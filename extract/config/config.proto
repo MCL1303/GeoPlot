@@ -1,16 +1,20 @@
 encoding "utf-8";
 
 TTextMinerConfig {
-  Dictionary = "mydic.gzt";
+  Dictionary = "config/mydic.gzt";
 
   PrettyOutput = "pr.html";
 
   Articles = [
     { Name = "точка" }
+    { Name = "отрезок" }
+    { Name = "треугольник" }
   ]
 
   Facts = [
     { Name = "Point" }
+    { Name = "Segment" }
+    { Name = "Triangle" }
   ]
 
   Output = {

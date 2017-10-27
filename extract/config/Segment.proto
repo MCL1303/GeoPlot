@@ -1,0 +1,7 @@
+import "base.proto";
+import "facttypes_base.proto";
+
+message Segment : NFactType.TFact {
+  optional string EndPoints = 1;
+  optional string Length = 2;
+}
