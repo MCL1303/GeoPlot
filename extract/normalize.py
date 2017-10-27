@@ -6,7 +6,7 @@ def main():
     doc = minidom.parse(sys.stdin.buffer)
     outdoc = minidom.getDOMImplementation().createDocument(None, 'facts', None)
     if doc.documentElement.hasChildNodes():
-        for node in doc.documentElement. \
+        for node in doc.documentElement.
         firstChild.firstChild.childNodes:
             newnode = outdoc.createElement(node.tagName)
             for subnode in node.childNodes:
