@@ -18,7 +18,7 @@ def main():
         check_cmd = "where /q >nul 2>&1 "
 
     try:
-        cmd = next(x for x in possible_commands if os.system("where /q " + x) == 0)
+        cmd = next(x for x in possible_commands if os.system(check_cmd + x) == 0)
     except StopIteration:
         print("Error: tomita parser not found!")
         exit(1)
