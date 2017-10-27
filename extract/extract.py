@@ -28,6 +28,7 @@ def main():
         exit(1)
 
     program_dir = os.path.dirname(os.path.realpath(__file__))
+    working_dir = os.getcwd()
     os.chdir(program_dir)
     mpath = os.path.join(program_dir, "..", "test", "data")
 
@@ -60,6 +61,8 @@ def main():
         bnf = os.path.splitext(os.path.basename(f))[0]
         os.system(ext_cmd.format(bnf))
         sys.stderr.write("Processed " + f + " file\n\n")
+
+    os.chdir(working_dir)
 
 if __name__ == '__main__':
     main()
