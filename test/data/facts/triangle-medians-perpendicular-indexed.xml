@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <facts>
-  <Triangle Names="ABC"/>
-  <Segment Names="AB"/>
+  <Triangle Vertices="ABC"/>
+  <Segment EndPoints="AB"/>
 </facts>

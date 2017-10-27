@@ -4,6 +4,6 @@
   <Point Name="O"/>
   <Point Name="A"/>
   <Point Name="B"/>
-  <Segment Names="MA"/>
+  <Segment EndPoints="MA"/>
   <Point Name="K"/>
 </facts>
