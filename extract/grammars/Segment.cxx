@@ -6,4 +6,4 @@ NumberString -> AnyWord<wff=/[0-9]*((\.|,)[0-9]+)?/>;
 SegmentBase -> PointNames interp(Segment.EndPoints);
 
 Segment -> Noun<kwtype="отрезок_название"> SegmentBase+;
-Segment -> PointNames interp(Segment.Names) AnyWord<kwtype="равно"> NumberString interp(Segment.Length);
+Segment -> PointNames interp(Segment.EndPoints) AnyWord<kwtype="равно"> NumberString interp(Segment.Length);
