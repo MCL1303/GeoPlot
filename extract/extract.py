@@ -6,7 +6,7 @@ import os.path
 
 def main():
     possible_commands = ["tomitaparser"]
-    findc = lambda cmd: os.system("which " + cmd) == 0
+    check_cmd = "which >/dev/null 2>&1 "
     if sys.platform.startswith("linux"):
         possible_commands += ["tomita-linux32", "tomita-linux64"]
     elif sys.platform.startswith("freebsd"):
@@ -15,10 +15,10 @@ def main():
         possible_commands += ["tomita-mac"]
     elif sys.platform.startswith("win"):
         possible_commands += ["tomita-win32"]
-        findc = lambda cmd: os.system("where /q " + cmd) == 0
+        check_cmd = "where /q >nul 2>&1 "
 
     try:
-        cmd = next(x for x in possible_commands if findc(x))
+        cmd = next(x for x in possible_commands if os.system("where /q " + x) == 0)
     except StopIteration:
         print("Error: tomita parser not found!")
         exit(1)
