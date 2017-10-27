@@ -29,10 +29,9 @@ def main():
     all_flag = False
     range_of_files = []
     for i in sys.argv[1:]:
-        if i[0] == '-':
-            if i.find('a') != -1:
-                all_flag = True
-                break
+        if i[0] == '*':
+            all_flag = True
+            break
         else: range_of_files.append(i)
 
     ext_cmd = cmd + " " + os.path.join(dnrp, "config", "config.proto") +\
