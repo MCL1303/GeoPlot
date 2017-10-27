@@ -8,5 +8,5 @@ where /q python3 && python3 extract.py %* || where /q python && (
 		echo Wrong python version ^(!ver!, requested: 3^)^!
 		exit /b 5
 	)
-	python %~p0\extract.py %*
+	python extract.py %*
 )
