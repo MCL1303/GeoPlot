@@ -102,7 +102,7 @@ def main():
     json.dump(
         {
             "Points": Point.instances,
-            "Segment": Segment.instances
+            "Segments": Segment.instances
         },
         sys.stdout,
         indent=4
