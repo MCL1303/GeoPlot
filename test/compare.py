@@ -14,15 +14,17 @@ def main():
         if os.path.splitext(i)[-1] == '.xml'
     )
 
-    subprocess.check_call(
-        os.path.join(program_dir, '..', 'extract', 'extract ')
-        + files + ' 2>' +
+    subprocess.check_call([
+        os.path.join(program_dir, '..', 'extract', 'extract'),
+        files, '2>',
         ('nul' if sys.platform.startswith('win') else '/dev/null')
-    )
+    ])
 
-    if subprocess.check_call("git diff --no-path --exit-code " + files):
+    try:
+        subprocess.check_call(["git", "diff", "--no-path", "--exit-code", files]):
+    except subprocess.CalledProcessError:
         os.chdir(program_dir)
-        subprocess.call('git checkout data/facts/')
+        subprocess.call(['git', 'checkout', 'data/facts/'])
         exit(1)
 
 if __name__ == '__main__':
