@@ -11,8 +11,11 @@ def main():
     program_dir = os.path.dirname(os.path.realpath(__file__))
     os.chdir(program_dir)
 
-    subprocess.check_call(
-        os.path.join('..', 'extract', 'extract *'),
+    subprocess.check_call([
+            sys.executable,
+            os.path.join('..', 'extract', 'extract.py'),
+            '*'
+        ],
         stderr=subprocess.DEVNULL,
         shell=True
     )
