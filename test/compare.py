@@ -16,7 +16,7 @@ def main():
     ], stdout=subprocess.DEVNULL)
 
     try:
-        subprocess.check_call(["git", "diff", "--no-path", "--exit-code", "data/facts"]):
+        subprocess.check_call(["git", "diff", "--no-path", "--exit-code", "data/facts"])
     except subprocess.CalledProcessError:
         subprocess.call(['git', 'checkout', 'data/facts/'])
         exit(1)
