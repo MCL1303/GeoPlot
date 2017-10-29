@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <facts>
-  <Segment Names="AC"/>
+  <Segment EndPoints="AC"/>
   <Point Name="C"/>
   <Point Name="M"/>
   <Point Name="N"/>
