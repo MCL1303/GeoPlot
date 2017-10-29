@@ -19,16 +19,16 @@ def main():
         possible_commands += ["tomita-win32"]
         check_cmd = "where /q >nul 2>&1 "
 
+    os.chdir(program_dir)
+    program_dir = os.path.dirname(os.path.realpath(__file__))
     try:
         cmd = next(
           x for x in possible_commands
-          if os.system(check_cmd + x) == 0)
+          if os.system(check_cmd + x) == 0 || os.system(check_cmd + os.path.join('.', x)))
     except StopIteration:
         print("Error: tomita parser not found!")
         exit(1)
 
-    program_dir = os.path.dirname(os.path.realpath(__file__))
-    os.chdir(program_dir)
     mpath = os.path.join(program_dir, "..", "test", "data")
 
     all_flag = False
