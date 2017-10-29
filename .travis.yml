@@ -1,2 +1,4 @@
-install: test/install.sh
+install:
+  - test/install.sh
+  - export PATH="$PATH:`pwd`"
 script: test/compare.py
