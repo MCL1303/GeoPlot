@@ -21,10 +21,8 @@ def main():
     )
 
     if subprocess.check_call("git diff --no-path --exit-code " + files):
-        working_dir = os.getcwd()
         os.chdir(program_dir)
-        os.system('git checkout data/facts/')
-        os.chdir(working_dir)
+        subprocess.call('git checkout data/facts/')
         exit(1)
 
 if __name__ == '__main__':
