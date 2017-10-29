@@ -1,6 +1,5 @@
 #! /usr/bin/env python3
 
-from glob import iglob
 import sys
 import subprocess
 import os
@@ -11,12 +10,12 @@ def main():
     program_dir = os.path.dirname(os.path.realpath(__file__))
     os.chdir(program_dir)
 
-    subprocess.check_call([
+    subprocess.check_call(
+        [
             sys.executable,
             os.path.join('..', 'extract', 'extract.py'),
             '*'
-        ],
-        stderr=subprocess.DEVNULL
+        ]
     )
 
     try:
