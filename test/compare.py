@@ -16,8 +16,7 @@ def main():
             os.path.join('..', 'extract', 'extract.py'),
             '*'
         ],
-        stderr=subprocess.DEVNULL,
-        shell=True
+        stderr=subprocess.DEVNULL
     )
 
     try:
