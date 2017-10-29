@@ -24,7 +24,8 @@ def main():
     try:
         cmd = next(
           x for x in possible_commands
-          if os.system(check_cmd + x) == 0 || os.system(check_cmd + os.path.join('.', x)))
+          if os.system(check_cmd + x) == 0 or\
+            os.system(check_cmd + os.path.join('.', x)))
     except StopIteration:
         print("Error: tomita parser not found!")
         exit(1)
