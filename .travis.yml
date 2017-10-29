@@ -1,2 +1,2 @@
-script: test/compare.py
 install: test/install.sh
+script: test/compare.py
