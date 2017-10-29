@@ -90,20 +90,23 @@ class Segment:
         Segment.add(both_ends, *ends)
 
 
+classes = {
+    "Point": Point,
+    "Segment": Segment
+}
+
+
 def main():
     doc = minidom.parse(sys.stdin.buffer)
     for node in doc.documentElement.childNodes:
         if node.nodeType == node.TEXT_NODE:
             continue
-        elif node.tagName == "Point":
-            Point.load(node)
-        elif node.tagName == "Segment":
-            Segment.load(node)
+        try:
+            classes[node.tagName].load(node)
+        except KeyError:
+            print("Warning: Unknown tag '", node.tagName, "'!", file=sys.stderr)
     json.dump(
-        {
-            "Points": Point.instances,
-            "Segments": Segment.instances
-        },
+        { k: v.instances for k, v in classes.items() if v.instances },
         sys.stdout,
         indent=4
     )
