@@ -14,13 +14,13 @@ def main():
         if os.path.splitext(i)[-1] == '.xml'
     )
 
-    subprocess.call(
+    subprocess.check_call(
         os.path.join(program_dir, '..', 'extract', 'extract ')
         + files + ' 2>' +
         ('nul' if sys.platform.startswith('win') else '/dev/null')
     )
 
-    if subprocess.call("git diff --no-path --exit-code " + files):
+    if subprocess.check_call("git diff --no-path --exit-code " + files):
         working_dir = os.getcwd()
         os.chdir(program_dir)
         os.system('git checkout data/facts/')
