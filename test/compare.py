@@ -25,7 +25,9 @@ def main():
             "--no-patch", "--exit-code",
             "data/facts"
         ])
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as err:
+        if err.returncode != 1:
+            raise
         subprocess.call(['git', 'checkout', 'data/facts/'])
         exit(1)
 
