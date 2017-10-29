@@ -13,11 +13,12 @@ def main():
 
     subprocess.check_call(
         os.path.join('..', 'extract', 'extract *'),
-        stderr=subprocess.DEVNULL
+        stderr=subprocess.DEVNULL,
+        shell=True
     )
 
     try:
-        subprocess.check_call(["git", "diff", "--no-path", "--exit-code", "data/facts"])
+        subprocess.check_call(["git", "diff", "--no-patch", "--exit-code", "data/facts"])
     except subprocess.CalledProcessError:
         subprocess.call(['git', 'checkout', 'data/facts/'])
         exit(1)
