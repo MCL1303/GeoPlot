@@ -21,7 +21,11 @@ def main():
     )
 
     try:
-        subprocess.check_call(["git", "diff", "--no-patch", "--exit-code", "data/facts"])
+        subprocess.check_call([
+            "git", "diff",
+            "--no-patch", "--exit-code",
+            "data/facts"
+        ])
     except subprocess.CalledProcessError:
         subprocess.call(['git', 'checkout', 'data/facts/'])
         exit(1)
