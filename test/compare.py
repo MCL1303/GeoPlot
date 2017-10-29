@@ -11,9 +11,10 @@ def main():
     program_dir = os.path.dirname(os.path.realpath(__file__))
     os.chdir(program_dir)
 
-    subprocess.check_call([
-        os.path.join('..', 'extract', 'extract'), '*'
-    ], stdout=subprocess.DEVNULL)
+    subprocess.check_call(
+        os.path.join('..', 'extract', 'extract *'),
+        stderr=subprocess.DEVNULL
+    )
 
     try:
         subprocess.check_call(["git", "diff", "--no-path", "--exit-code", "data/facts"])
