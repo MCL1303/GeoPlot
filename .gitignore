@@ -1,5 +1,4 @@
 *.bin
-*.html
 __pycache__
 extract/tomita-linux64
 test/data/intermediate_output/*.xml
