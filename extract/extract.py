@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
-import os
 from glob import iglob
+import os
 import os.path
+import sys
 
 
 def main():
@@ -18,13 +18,14 @@ def main():
     elif sys.platform.startswith("win"):
         possible_commands += ["tomita-win32"]
         check_cmd = "where /q >nul 2>&1 "
-    
+
     program_dir = os.path.dirname(os.path.realpath(__file__))
     os.chdir(program_dir)
     try:
         cmd = next(
-          x for x in possible_commands
-          if os.system(check_cmd + x) == 0)
+            x for x in possible_commands
+            if os.system(check_cmd + x) == 0
+        )
     except StopIteration:
         print("Error: tomita parser not found!")
         exit(1)
@@ -55,11 +56,11 @@ def main():
             print("Error: no files listed (nor used -a option)!")
             exit(4)
 
-    for f in range_of_files:
-        print("Processing", f, "file", file=sys.stderr)
-        bnf = os.path.splitext(os.path.basename(f))[0]
+    for file in range_of_files:
+        print("Processing", file, "file", file=sys.stderr)
+        bnf = os.path.splitext(os.path.basename(file))[0]
         os.system(ext_cmd.format(bnf))
-        print("Processed", f, "file", end="\n\n", file=sys.stderr)
+        print("Processed", file, "file", end="\n\n", file=sys.stderr)
 
 if __name__ == '__main__':
     main()
