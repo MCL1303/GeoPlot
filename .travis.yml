@@ -1,4 +1,4 @@
 install:
   - test/install.sh
-  - export PATH="$PATH:`pwd`"
+  - export PATH="$PATH:`pwd`/extract"
 script: test/compare.py
