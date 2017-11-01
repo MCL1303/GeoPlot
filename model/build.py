@@ -9,64 +9,55 @@ from random import uniform
 MAX_Y = 10
 MAX_X = 20
 
+
+def as_json(self):
+    if type(self) == frozenset:
+        return list(self)
+    a = self.__dict__.copy()
+    for k in list(a.keys()):
+        if k.startswith('_'):
+            del a[k]
+    return a
+
+
 class __geomobj:
     @classmethod
-    def add(cls, name=None, *args):
-        if name is not None and name in cls.instances:
-            return cls.instances[name]
-        return cls(name, *args)
-
-    @classmethod
-    def load(cls, node):
-        try:
-            res = cls.unpack(node)
-            if type(res) == tuple or type(res) == list:
-                cls.add(*res)
+    def add(cls, identifier=None, *args):
+        if identifier is not None:
+            if identifier in cls.instances:
+                return cls.instances[identifier].update(*args)
             else:
-                cls.add(res)
-        except KeyError:
-            cls.add()
-
-    def __init__(self, name):
-        self.name = name
-        if name is not None:
-            self.instances[self.name] = self
+                obj = cls(identifier, *args)
+                cls.instances[identifier] = obj
+                return obj
         else:
-            self.instances[None].append(self)
+            obj = cls(identifier, *args)
+            cls.unnamed_instances.append(obj)
+            return obj
+
+    def __init__(self):
         self.__resolved = False
+
+    def update(self):
+        pass
 
     def resolve_one(self):
         if not self.__resolved:
             self.proceed()
             self.__resolved = True
 
-    def __lt__(self, other):
-        if type(self) != type(other):
-            raise TypeError
-        return self.name < other.name
-
-    def as_json(self):
-        a = self.__dict__.copy()
-        for k in list(a.keys()):
-            if k.startswith('_'):
-                del a[k]
-        return a
-
     @classmethod
     def resolve(cls):
-        for k, v in list(cls.instances.items()):
-            if k is not None:
-                v.resolve_one()
-            else:
-                for i in v:
-                    i.resolve_one()
-                    cls.instances[i.name] = i
+        for i in list(cls.instances.values()):
+            i.resolve_one()
+        for i in cls.unnamed_instances:
+            i.resolve_one()
 
 def resolve_all():
     for cls in __geomobj.__subclasses__():
         cls.resolve()
     for cls in __geomobj.__subclasses__():
-        del cls.instances[None]
+        del cls.unnamed_instances
 
 class Point(__geomobj):
     def namesGeneratorFactory(letter='A', start=0):
@@ -78,17 +69,21 @@ class Point(__geomobj):
             i += 1
 
     namesGenerator = namesGeneratorFactory()
-    instances = {
-        None: []
-    }
+    instances = {}
+    unnamed_instances = []
 
     def __init__(self, name):
-        super().__init__(name)
+        super().__init__()
+        self.name = name
         self.x, self.y = None, None
 
     @staticmethod
-    def unpack(node):
-        return node.attributes["Name"].value
+    def load(node):
+        try:
+            name = node.attributes["Name"].value
+        except KeyError:
+            name = None
+        Point.add(name)
 
     def proceed(self):
         coords = uniform(0, MAX_X), uniform(0, MAX_Y)
@@ -97,33 +92,36 @@ class Point(__geomobj):
         self.x, self.y = coords
         if self.name is None:
             self.name = next(Point.namesGenerator)
+            self.instances[self.name] = self
+
 
 class Segment(__geomobj):
-    instances = {
-        None: []
-    }
+    instances = {}
+    unnamed_instances = []
 
-    def __init__(self, name, first_end=None, second_end=None):
-        super().__init__(name)
-        self.ends = list(
-            sorted(
-                [Point.add(first_end), Point.add(second_end)]
-            )
-        )
+    def __init__(self, ends):
+        super().__init__()
+        self.ends = ends
 
     @staticmethod
-    def unpack(node):
-        a, b = sorted(re.match(
-            '([A-Z][0-9]*)([A-Z][0-9]*)',
-            node.attributes["EndPoints"].value
-        ).group(1, 2))
-        return a + b, a, b
+    def load(node):
+        try:
+            ends = re.match(
+                '([A-Z][0-9]*)([A-Z][0-9]*)',
+                node.attributes["EndPoints"].value
+            ).group(1, 2)
+            # TODO: add case then just one end is unknown
+        except KeyError:
+            ends = [None, None]
+        Segment.add(frozenset(map(Point.add, ends)))
 
     def proceed(self):
-        self.ends[0].resolve_one()
-        self.ends[1].resolve_one()
-        if self.name is None:
-            self.name = self.ends[0].name + self.ends[1].name
+        for i in self.ends:
+            i.resolve_one()
+
+    def update(self, length):
+        # TODO: implement
+        pass
 
 classes = {
     "Point": Point,
@@ -144,7 +142,7 @@ def main():
     json.dump(
         { k: list(v.instances.values()) for k, v in classes.items() if v.instances },
         sys.stdout,
-        default=lambda o: o.as_json(),
+        default=lambda o: as_json(o),
         indent=4
     )
 
