@@ -5,11 +5,11 @@ import os
 import os.path
 import sys
 import subprocess
+import shutil
 
 
 def main():
     possible_commands = ["tomitaparser"]
-    check_cmd = "which >/dev/null 2>&1 "
     if sys.platform.startswith("linux"):
         possible_commands += ["tomita-linux32", "tomita-linux64"]
     elif sys.platform.startswith("freebsd"):
@@ -18,14 +18,13 @@ def main():
         possible_commands += ["tomita-mac"]
     elif sys.platform.startswith("win"):
         possible_commands += ["tomita-win32"]
-        check_cmd = "where /q >nul 2>&1 "
 
     program_dir = os.path.dirname(os.path.realpath(__file__))
     os.chdir(program_dir)
     try:
         cmd = next(
             x for x in possible_commands
-            if os.system(check_cmd + x) == 0
+            if shutil.which(x)
         )
     except StopIteration:
         print("Error: tomita parser not found!")
