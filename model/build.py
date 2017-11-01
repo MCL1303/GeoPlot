@@ -9,86 +9,126 @@ from random import uniform
 MAX_Y = 10
 MAX_X = 20
 
-class Point:
-    def namesGeneratorFactory(letters=None, start=10):
-        if letters is None:
-            letters = ['F']
-        for letter in letters:
-            i = start
-            while True:
-                yield letter + str(i)
-                i += 1
+# starts with '__' because it has to be invisible in imports
+class __geomobj:
+    @classmethod
+    def add(cls, name=None, *args):
+        if name is not None and name in cls.instances:
+            return cls.instances[name]
+        return cls(name, *args)
+
+    @classmethod
+    def load(cls, node):
+        try:
+            res = cls.unpack(node)
+            if type(res) == tuple or type(res) == list:
+                cls.add(*res)
+            else:
+                cls.add(res)
+        except KeyError:
+            cls.add()
+
+    def __init__(self, name):
+        self.name = name
+        if name is not None:
+            self.instances[self.name] = self
+        else:
+            self.instances[None].append(self)
+        self.__resolved = False
+
+    def resolveOne(self):
+        if not self.__resolved:
+            self.proceed()
+            self.__resolved = True
+
+    def __lt__(self, other):
+        if type(self) != type(other):
+            raise TypeError
+        return self.name < other.name
+
+    @classmethod
+    def __next__(cls):
+        return next(cls.namesGenerator)
+
+    def jsonDict(self):
+        a = self.__dict__.copy()
+        for k in list(a.keys()):
+            if k.startswith('_'):
+                del a[k]
+        return a
+
+    @classmethod
+    def resolve(cls):
+        for k, v in list(cls.instances.items()):
+            if k is not None:
+                v.resolveOne()
+            else:
+                for i in v:
+                    i.resolveOne()
+                    cls.instances[i.name] = i
+
+def resolveAll():
+    for cls in __geomobj.__subclasses__():
+        cls.resolve()
+    for cls in __geomobj.__subclasses__():
+        del cls.instances[None]
+
+class Point(__geomobj):
+    def namesGeneratorFactory(letter='A', start=0):
+        i = start
+        while True:
+            name = letter + str(i)
+            if name not in Point.instances:
+                yield name
+            i += 1
 
     namesGenerator = namesGeneratorFactory()
-    instances = {}
+    instances = {
+        None: []
+    }
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.x, self.y = None, None
 
     @staticmethod
-    def add(name):
-        if name in Point.instances:
-            return Point.instances[name]
+    def unpack(node):
+        return node.attributes["Name"].value
+
+    def proceed(self):
         coords = uniform(0, MAX_X), uniform(0, MAX_Y)
         while coords in Point.instances.values():
             coords = uniform(0, MAX_X), uniform(0, MAX_Y)
-        Point.instances[name] = coords
-        return Point.instances[name]
+        self.x, self.y = coords
+        if self.name is None:
+            self.name = next(Point.namesGenerator)
+
+class Segment(__geomobj):
+    instances = {
+        None: []
+    }
+
+    def __init__(self, name, first_end=None, second_end=None):
+        super().__init__(name)
+        self.ends = list(
+            sorted(
+                [Point.add(first_end), Point.add(second_end)]
+            )
+        )
 
     @staticmethod
-    def load(node):
-        try:
-            name = node.attributes["Name"].value
-        except KeyError:
-            name = next(Point.namesGenerator)
-        if name in Point.instances:
-            return
-        Point.add(name)
+    def unpack(node):
+        a, b = sorted(re.match(
+            '([A-Z][0-9]*)([A-Z][0-9]*)',
+            node.attributes["EndPoints"].value
+        ).group(1, 2))
+        return ''.join([a, b]), a, b
 
-
-class Segment:
-    def namesGeneratorFactory(
-        first_end_letters=None,
-        second_end_letters=None,
-        start=10):
-        if first_end_letters is None:
-            first_end_letters = ['F']
-        if second_end_letters is None:
-            second_end_letters = first_end_letters
-        for first_end in Point.namesGeneratorFactory(
-            first_end_letters,
-            start):
-            for second_end in Point.namesGeneratorFactory(
-                    second_end_letters,
-                    start):
-                if first_end + second_end in Segment.instances or\
-                    second_end + first_end in Segment.instances:
-                    continue
-                yield first_end, second_end
-
-    namesGenerator = namesGeneratorFactory()
-    instances = {}
-
-    @staticmethod
-    def add(both_ends, first_end, second_end):
-        if both_ends in Segment.instances:
-            return Segment.instances[both_ends]
-        a, b = Point.add(first_end), Point.add(second_end)
-        Segment.instances[both_ends] = {
-            first_end: a,
-            second_end: b
-        }
-
-    @staticmethod
-    def load(node):
-        try:
-            both_ends = node.attributes["EndPoints"].value
-        except KeyError:
-            both_ends = next(Segment.namesGenerator)
-        ends = re.match(
-            '([A-Z][0-9]*)([A-Z][0-9]*)', both_ends
-        ).group(1, 2)
-        # TODO: get Length
-        both_ends = ''.join(sorted(ends)) # C1C2 same as C2C1
-        Segment.add(both_ends, *ends)
-
+    def proceed(self):
+        self.ends[0].resolveOne()
+        self.ends[1].resolveOne()
+        if self.name is None:
+            self.name = self.ends[0].name + self.ends[1].name
 
 classes = {
     "Point": Point,
@@ -104,10 +144,12 @@ def main():
         try:
             classes[node.tagName].load(node)
         except KeyError:
-            print("Warning: Unknown tag '", node.tagName, "'!", file=sys.stderr)
+            raise TypeError("Warning: Unknown tag '" + node.tagName + "'!")
+    resolveAll()
     json.dump(
-        { k: v.instances for k, v in classes.items() if v.instances },
+        { k: list(v.instances.values()) for k, v in classes.items() if v.instances },
         sys.stdout,
+        default=lambda o: o.jsonDict(),
         indent=4
     )
 
