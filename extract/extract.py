@@ -4,11 +4,12 @@ from glob import iglob
 import os
 import os.path
 import sys
+import subprocess
+import shutil
 
 
 def main():
     possible_commands = ["tomitaparser"]
-    check_cmd = "which >/dev/null 2>&1 "
     if sys.platform.startswith("linux"):
         possible_commands += ["tomita-linux32", "tomita-linux64"]
     elif sys.platform.startswith("freebsd"):
@@ -17,14 +18,13 @@ def main():
         possible_commands += ["tomita-mac"]
     elif sys.platform.startswith("win"):
         possible_commands += ["tomita-win32"]
-        check_cmd = "where /q >nul 2>&1 "
 
     program_dir = os.path.dirname(os.path.realpath(__file__))
     os.chdir(program_dir)
     try:
         cmd = next(
             x for x in possible_commands
-            if os.system(check_cmd + x) == 0
+            if shutil.which(x)
         )
     except StopIteration:
         print("Error: tomita parser not found!")
@@ -41,13 +41,9 @@ def main():
         else:
             range_of_files.append(i)
 
-    ext_cmd = (
-        cmd + " " +
-        os.path.join(program_dir, "config", "config.proto") +
-        " <\"" + os.path.join(mpath, "input", '') + "{0}.txt\" | \"" +
-        sys.executable + "\" normalize.py" +
-        " >\"" + os.path.join(mpath, "facts", '') + "{0}.xml\""
-    )
+    config_path = os.path.join(program_dir, "config", "config.proto")
+    input_path = os.path.join(mpath, "input", '{}.txt')
+    facts_path = os.path.join(mpath, "facts", '{}.xml')
 
     if not range_of_files:
         if all_flag:
@@ -58,8 +54,20 @@ def main():
 
     for file in range_of_files:
         print("Processing", file, "file", file=sys.stderr)
-        bnf = os.path.splitext(os.path.basename(file))[0]
-        os.system(ext_cmd.format(bnf))
+        file_base_name = os.path.splitext(os.path.basename(file))[0]
+        with open(input_path.format(file_base_name)) as input_file:
+            ext_proc = subprocess.Popen(
+                [cmd, config_path],
+                stdin=input_file,
+                stdout=subprocess.PIPE
+            )
+            with open(facts_path.format(file_base_name), 'w') as output_file:
+                subprocess.check_call(
+                    [sys.executable, 'normalize.py'],
+                    stdin=ext_proc.stdout,
+                    stdout=output_file
+                )
+
         print("Processed", file, "file", end="\n\n", file=sys.stderr)
 
 if __name__ == '__main__':
