@@ -6,10 +6,9 @@ import json
 import re
 from random import uniform
 
-MAX_Y = 10
-MAX_X = 20
+from geometry import *
 
-
+'''
 def as_json(obj):
     if type(obj) == frozenset:
         return list(obj)
@@ -126,7 +125,7 @@ classes = {
     "Point": Point,
     "Segment": Segment
 }
-
+'''
 
 def main():
     doc = minidom.parse(sys.stdin.buffer)
@@ -134,12 +133,12 @@ def main():
         if node.nodeType == node.TEXT_NODE:
             continue
         try:
-            classes[node.tagName].load(node)
+            classes()[node.tagName].load(node)
         except KeyError:
             raise TypeError("Warning: Unknown tag '" + node.tagName + "'!")
     resolve_all()
     json.dump(
-        { k: list(v.instances.values()) for k, v in classes.items() if v.instances },
+        { k: list(v.instances.values()) for k, v in classes().items() if v.instances },
         sys.stdout,
         default=lambda o: as_json(o),
         indent=4
