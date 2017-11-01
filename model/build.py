@@ -45,10 +45,6 @@ class __geomobj:
             raise TypeError
         return self.name < other.name
 
-    @classmethod
-    def __next__(cls):
-        return next(cls.namesGenerator)
-
     def as_json(self):
         a = self.__dict__.copy()
         for k in list(a.keys()):
@@ -121,7 +117,7 @@ class Segment(__geomobj):
             '([A-Z][0-9]*)([A-Z][0-9]*)',
             node.attributes["EndPoints"].value
         ).group(1, 2))
-        return ''.join([a, b]), a, b
+        return a + b, a, b
 
     def proceed(self):
         self.ends[0].resolve_one()
