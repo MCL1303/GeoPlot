@@ -4,6 +4,7 @@ from glob import iglob
 import os
 import os.path
 import sys
+import subprocess
 
 
 def main():
@@ -41,13 +42,9 @@ def main():
         else:
             range_of_files.append(i)
 
-    ext_cmd = (
-        cmd + " " +
-        os.path.join(program_dir, "config", "config.proto") +
-        " <\"" + os.path.join(mpath, "input", '') + "{0}.txt\" | \"" +
-        sys.executable + "\" normalize.py" +
-        " >\"" + os.path.join(mpath, "facts", '') + "{0}.xml\""
-    )
+    config_path = os.path.join(program_dir, "config", "config.proto")
+    input_path = os.path.join(mpath, "input", '%s.txt')
+    facts_path = os.path.join(mpath, "facts", '%s.xml')
 
     if not range_of_files:
         if all_flag:
@@ -59,7 +56,19 @@ def main():
     for file in range_of_files:
         print("Processing", file, "file", file=sys.stderr)
         bnf = os.path.splitext(os.path.basename(file))[0]
-        os.system(ext_cmd.format(bnf))
+        with open(input_path % bnf) as input_file:
+            ext_proc = subprocess.Popen(
+                [cmd, config_path],
+                stdin=input_file,
+                stdout=subprocess.PIPE
+            )
+            with open(facts_path % bnf, 'w') as output_file:
+                subprocess.check_call(
+                    [sys.executable, 'normalize.py'],
+                    stdin=ext_proc.stdout,
+                    stdout=output_file
+                )
+
         print("Processed", file, "file", end="\n\n", file=sys.stderr)
 
 if __name__ == '__main__':
