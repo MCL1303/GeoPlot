@@ -105,14 +105,14 @@ class Segment(__geomobj):
     @staticmethod
     def load(node):
         try:
-            ends = re.match(
+            a, b = re.match(
                 '([A-Z][0-9]*)([A-Z][0-9]*)',
                 node.attributes["EndPoints"].value
             ).group(1, 2)
             # TODO: add case then just one end is unknown
         except KeyError:
-            ends = [None, None]
-        Segment.add(frozenset(map(Point.add, ends)))
+            a, b = None, None
+        Segment.add(frozenset({ Point.add(a), Point.add(b) }))
 
     def proceed(self):
         for i in self.ends:
