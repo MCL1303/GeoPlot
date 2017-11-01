@@ -66,7 +66,7 @@ class __geomobj:
                     i.resolve_one()
                     cls.instances[i.name] = i
 
-def resolveAll():
+def resolve_all():
     for cls in __geomobj.__subclasses__():
         cls.resolve()
     for cls in __geomobj.__subclasses__():
@@ -144,7 +144,7 @@ def main():
             classes[node.tagName].load(node)
         except KeyError:
             raise TypeError("Warning: Unknown tag '" + node.tagName + "'!")
-    resolveAll()
+    resolve_all()
     json.dump(
         { k: list(v.instances.values()) for k, v in classes.items() if v.instances },
         sys.stdout,
