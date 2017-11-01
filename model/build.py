@@ -10,10 +10,10 @@ MAX_Y = 10
 MAX_X = 20
 
 
-def as_json(self):
-    if type(self) == frozenset:
-        return list(self)
-    a = self.__dict__.copy()
+def as_json(obj):
+    if type(obj) == frozenset:
+        return list(obj)
+    a = obj.__dict__.copy()
     for k in list(a.keys()):
         if k.startswith('_'):
             del a[k]
