@@ -14,6 +14,7 @@ def as_json(obj):
     if type(obj) == frozenset:
         return list(obj)
     a = obj.__dict__.copy()
+    del a['unnamed_instances']
     for k in list(a.keys()):
         if k.startswith('_'):
             del a[k]
@@ -56,8 +57,6 @@ class __geomobj:
 def resolve_all():
     for cls in __geomobj.__subclasses__():
         cls.resolve()
-    for cls in __geomobj.__subclasses__():
-        del cls.unnamed_instances
 
 class Point(__geomobj):
     def namesGeneratorFactory(letter='A', start=0):
