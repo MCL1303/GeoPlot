@@ -42,8 +42,8 @@ def main():
             range_of_files.append(i)
 
     config_path = os.path.join(program_dir, "config", "config.proto")
-    input_path = os.path.join(mpath, "input", '%s.txt')
-    facts_path = os.path.join(mpath, "facts", '%s.xml')
+    input_path = os.path.join(mpath, "input", '{}.txt')
+    facts_path = os.path.join(mpath, "facts", '{}.xml')
 
     if not range_of_files:
         if all_flag:
@@ -54,14 +54,14 @@ def main():
 
     for file in range_of_files:
         print("Processing", file, "file", file=sys.stderr)
-        bnf = os.path.splitext(os.path.basename(file))[0]
-        with open(input_path % bnf) as input_file:
+        file_base_name = os.path.splitext(os.path.basename(file))[0]
+        with open(input_path.format(file_base_name)) as input_file:
             ext_proc = subprocess.Popen(
                 [cmd, config_path],
                 stdin=input_file,
                 stdout=subprocess.PIPE
             )
-            with open(facts_path % bnf, 'w') as output_file:
+            with open(facts_path.format(file_base_name), 'w') as output_file:
                 subprocess.check_call(
                     [sys.executable, 'normalize.py'],
                     stdin=ext_proc.stdout,
