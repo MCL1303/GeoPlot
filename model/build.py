@@ -9,7 +9,6 @@ from random import uniform
 MAX_Y = 10
 MAX_X = 20
 
-# starts with '__' because it has to be invisible in imports
 class __geomobj:
     @classmethod
     def add(cls, name=None, *args):
@@ -36,7 +35,7 @@ class __geomobj:
             self.instances[None].append(self)
         self.__resolved = False
 
-    def resolveOne(self):
+    def resolve_one(self):
         if not self.__resolved:
             self.proceed()
             self.__resolved = True
@@ -50,7 +49,7 @@ class __geomobj:
     def __next__(cls):
         return next(cls.namesGenerator)
 
-    def jsonDict(self):
+    def as_json(self):
         a = self.__dict__.copy()
         for k in list(a.keys()):
             if k.startswith('_'):
@@ -61,10 +60,10 @@ class __geomobj:
     def resolve(cls):
         for k, v in list(cls.instances.items()):
             if k is not None:
-                v.resolveOne()
+                v.resolve_one()
             else:
                 for i in v:
-                    i.resolveOne()
+                    i.resolve_one()
                     cls.instances[i.name] = i
 
 def resolveAll():
@@ -125,8 +124,8 @@ class Segment(__geomobj):
         return ''.join([a, b]), a, b
 
     def proceed(self):
-        self.ends[0].resolveOne()
-        self.ends[1].resolveOne()
+        self.ends[0].resolve_one()
+        self.ends[1].resolve_one()
         if self.name is None:
             self.name = self.ends[0].name + self.ends[1].name
 
@@ -149,7 +148,7 @@ def main():
     json.dump(
         { k: list(v.instances.values()) for k, v in classes.items() if v.instances },
         sys.stdout,
-        default=lambda o: o.jsonDict(),
+        default=lambda o: o.as_json(),
         indent=4
     )
 
