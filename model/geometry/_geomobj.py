@@ -1,4 +1,4 @@
-class __geomobj:
+class _geomobj:
     @classmethod
     def add(cls, identifier=None, *args):
         if identifier is not None:
@@ -16,8 +16,18 @@ class __geomobj:
     def __init__(self):
         self.__resolved = False
 
+    @staticmethod
+    def load(element):
+        raise NotImplementedError
+
+    def as_json(self):
+        raise NotImplementedError
+
     def update(self):
         pass
+
+    def proceed(self):
+        raise NotImplementedError
 
     def resolve_one(self):
         if not self.__resolved:

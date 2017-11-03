@@ -1,10 +1,10 @@
-from .__geomobj import __geomobj
+from ._geomobj import _geomobj
 from random import uniform
 
 MAX_Y = 10
 MAX_X = 20
 
-class Point(__geomobj):
+class Point(_geomobj):
     def namesGeneratorFactory(letter='A', start=0):
         i = start
         while True:

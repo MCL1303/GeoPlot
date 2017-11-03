@@ -1,8 +1,8 @@
-from .__geomobj import __geomobj
+from ._geomobj import _geomobj
 from .Point import Point
 import re
 
-class Segment(__geomobj):
+class Segment(_geomobj):
     instances = {}
     unnamed_instances = []
 
@@ -23,7 +23,10 @@ class Segment(__geomobj):
         Segment.add(frozenset({ Point.add(a), Point.add(b) }))
 
     def as_json(self):
-        return dict(zip(["first_end", "second_end"], self.ends))
+        return {
+            "first_end": self.ends[0],
+            "second_end": self.ends[1]
+        }
 
     def proceed(self):
         for i in self.ends:
