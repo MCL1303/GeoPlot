@@ -1,2 +1,2 @@
 out_file=$(dirname $0)/models/$(basename $1 .xml).json
-build.py < $1 > $out_file || rm $out_file
+$(dirname $0)/build.py < $1 > $out_file || rm $out_file

@@ -24,7 +24,7 @@ class _geomobj:
         raise NotImplementedError
 
     def update(self):
-        pass
+        return self
 
     def proceed(self):
         raise NotImplementedError

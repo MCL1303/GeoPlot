@@ -8,7 +8,7 @@ class Segment(_geomobj):
 
     def __init__(self, ends):
         super().__init__()
-        self.ends = ends
+        self.ends = list(ends)
 
     @staticmethod
     def load(node):
@@ -23,10 +23,9 @@ class Segment(_geomobj):
         Segment.add(frozenset({ Point.add(a), Point.add(b) }))
 
     def as_json(self):
-        ends = list(self.ends)
         return {
-            "first_end": ends[0],
-            "second_end": ends[1]
+            "first_end": self.ends[0],
+            "second_end": self.ends[1]
         }
 
     def proceed(self):
