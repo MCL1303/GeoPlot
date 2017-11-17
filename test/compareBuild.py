@@ -11,9 +11,7 @@ def main():
     os.chdir(program_dir)
 
     for i in iglob(os.path.join('data', 'facts', '*.xml')):
-        print(i)
         subprocess.check_call([os.path.join('..', 'model', 'build.bat'), i])
-    print(glob(os.path.join('data', 'facts', '*.xml')))
 
     try:
         subprocess.check_call([
