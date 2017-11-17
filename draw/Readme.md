@@ -1,1 +1,1 @@
-To draw the model from file use `build %file%` or `./build $file` on UNIX
+To draw the model from file use `draw %file%` or `./draw $file` on UNIX
