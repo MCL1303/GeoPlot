@@ -1,1 +1,2 @@
-find -name "*.py" -type f -exec pycodestyle {} \;
+pycodestyle .
+exit $?
