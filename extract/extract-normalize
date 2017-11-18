@@ -7,5 +7,6 @@ if [ -z "$tomita" ]; then
     exit 1
 fi
 
+last_dir=`pwd`
 cd `dirname $0`
-$tomita config/config.proto < $1 | normalize.py > ../test/data/facts/`basename $1 .txt`.xml
+$tomita config/config.proto < $last_dir/$1 | normalize.py > ../test/data/facts/`basename $1 .txt`.xml
