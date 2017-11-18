@@ -8,7 +8,7 @@ class Segment(_geomobj):
 
     def __init__(self, ends):
         super().__init__()
-        self.ends = ends
+        self.ends = list(ends)
 
     @staticmethod
     def load(node):

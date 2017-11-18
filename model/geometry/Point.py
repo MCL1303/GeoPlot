@@ -1,8 +1,5 @@
 from ._geomobj import _geomobj
-from random import uniform
-
-MAX_Y = 10
-MAX_X = 20
+from random import random
 
 class Point(_geomobj):
     def namesGeneratorFactory(letter='A', start=0):
@@ -38,9 +35,9 @@ class Point(_geomobj):
         Point.add(name)
 
     def proceed(self):
-        coords = uniform(0, MAX_X), uniform(0, MAX_Y)
+        coords = random(), random()
         while coords in Point.instances.values():
-            coords = uniform(0, MAX_X), uniform(0, MAX_Y)
+            coords = random(), random()
         self.x, self.y = coords
         if self.name is None:
             self.name = next(Point.namesGenerator)
