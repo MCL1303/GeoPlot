@@ -1,5 +1,5 @@
 from ._geomobj import _geomobj
-from random import random
+import random
 
 random.seed(23142351)
 
@@ -37,9 +37,9 @@ class Point(_geomobj):
         Point.add(name)
 
     def proceed(self):
-        coords = random(), random()
+        coords = random.random(), random.random()
         while coords in Point.instances.values():
-            coords = random(), random()
+            coords = random.random(), random.random()
         self.x, self.y = coords
         if self.name is None:
             self.name = next(Point.namesGenerator)
