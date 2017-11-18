@@ -1,0 +1,1 @@
+find test/data/facts/ -type f -name "*.xml" -exec model/build {} \;
