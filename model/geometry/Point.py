@@ -1,6 +1,8 @@
 from ._geomobj import _geomobj
 from random import random
 
+random.seed(23142351)
+
 class Point(_geomobj):
     def namesGeneratorFactory(letter='A', start=0):
         i = start

@@ -4,7 +4,6 @@ from xml.dom import minidom
 import sys
 import json
 import re
-from random import uniform
 
 from geometry import *
 
@@ -17,7 +16,7 @@ def main():
         try:
             classes()[node.tagName].load(node)
         except KeyError:
-            raise TypeError("Warning: Unknown tag '" + node.tagName + "'!")
+            raise TypeError("Error: Unknown tag '" + node.tagName + "'!")
     resolve_all()
     json.dump(
         { k: list(v.instances.values()) for k, v in classes().items() if v.instances },
