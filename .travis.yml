@@ -6,4 +6,4 @@ install:
 script:
   - test/style.sh
   - test/compare.py
-  - test/compareBuild.py
+  - test/compareBuild.sh
