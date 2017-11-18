@@ -1,26 +1,37 @@
-#!/usr/bin/env python3
+#! /usr/bin/env python3
 
 from PIL import Image, ImageDraw, ImageColor, ImageFont
 import sys
 import json
 
-model = json.load(sys.stdin)
-points = model.get("Point", [])
+from geometry import *
 
-HEIGHT = 1024
-WIDTH = 1024
-BLUE = (255, 255, 255)
-BLACK = (0, 0, 0)
-POINT_SIZE = 2
-FONT = ImageFont.truetype('arial.ttf', 20)
 
-out = Image.new('RGB', (HEIGHT, WIDTH), color=BLUE)
-d = ImageDraw.Draw(out)
+def main():
+	model = json.load(sys.stdin)
+	for k, v in model.items():
+		try:
+			cls = classes()[k]
+			for item in v:
+				cls.load(item)
+		except KeyError:
+			raise TypeError("Error: Unknown object name '" + k + "'!")
 
-for i in points:
-	x, y = i["x"] * WIDTH, i["y"] * HEIGHT
-	d.arc((x - POINT_SIZE, y - POINT_SIZE, x + POINT_SIZE, y + POINT_SIZE),
-		0, 360, BLACK) # d.point((x, y), BLACK)
-	d.text((x - 20, y - 20), i["name"], BLACK, FONT)
+	HEIGHT = 1024
+	WIDTH = 1024
+	POINT_SIZE = 2
+	FONT = ImageFont.truetype('arial.ttf', 20)
 
-out.save(sys.stdout.buffer, 'PNG')
+	out = Image.new('RGB', (HEIGHT, WIDTH), color=(255, 255, 255))
+	d = ImageDraw.Draw(out)
+
+	d.height = HEIGHT
+	d.textFont = FONT
+	d.width = WIDTH
+	draw_all(d)
+
+	out.save(sys.stdout.buffer, 'PNG')
+
+
+if __name__ == '__main__':
+	main()
