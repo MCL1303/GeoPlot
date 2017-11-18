@@ -2,5 +2,6 @@ install:
   - test/install.sh
   - export PATH="$PATH:`pwd`/extract"
 script:
+  - test/style.sh
   - test/compare.py
   - test/compareBuild.py
