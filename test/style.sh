@@ -1,1 +1,1 @@
-find -type f -name "*.py" -exec pep8 {} \;
+find *.py -type f -exec pep8 {} \;
