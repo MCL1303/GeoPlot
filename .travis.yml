@@ -5,5 +5,5 @@ install:
   - export PATH="$PATH:`pwd`/extract"
 script:
   - pycodestyle .
-  - test/compare.py
+  - test/compare.sh
   - test/compareBuild.sh
