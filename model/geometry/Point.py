@@ -1,8 +1,8 @@
 from ._geomobj import _geomobj
-from random import uniform
+import random
 
-MAX_Y = 10
-MAX_X = 20
+random.seed(23142351)
+
 
 class Point(_geomobj):
     def namesGeneratorFactory(letter='A', start=0):
@@ -16,6 +16,10 @@ class Point(_geomobj):
     namesGenerator = namesGeneratorFactory()
     instances = {}
     unnamed_instances = []
+
+    @classmethod
+    def static_as_json(cls):
+        return list(i[1] for i in sorted(cls.instances.items()))
 
     def as_json(self):
         return {
@@ -38,9 +42,9 @@ class Point(_geomobj):
         Point.add(name)
 
     def proceed(self):
-        coords = uniform(0, MAX_X), uniform(0, MAX_Y)
+        coords = random.random(), random.random()
         while coords in Point.instances.values():
-            coords = uniform(0, MAX_X), uniform(0, MAX_Y)
+            coords = random.random(), random.random()
         self.x, self.y = coords
         if self.name is None:
             self.name = next(Point.namesGenerator)

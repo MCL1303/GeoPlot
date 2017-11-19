@@ -1,4 +1,9 @@
+language: python
+python: 3.6
 install:
   - test/install.sh
   - export PATH="$PATH:`pwd`/extract"
-script: test/compare.py
+script:
+  - pycodestyle .
+  - test/compare.sh
+  - test/compareBuild.sh
