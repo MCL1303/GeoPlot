@@ -12,12 +12,15 @@ __all__ = [
 __all__ += ["classes", "resolve_all", "as_json"]
 
 __classes = None
+
+
 def classes():
     global __classes
     if __classes is not None:
         return __classes
-    __classes = { i.__name__: i for i in _geomobj._geomobj.__subclasses__() }
+    __classes = {i.__name__: i for i in _geomobj._geomobj.__subclasses__()}
     return __classes
+
 
 def as_json(obj):
     if isinstance(obj, frozenset):
@@ -25,6 +28,7 @@ def as_json(obj):
     elif isclass(obj):
         return obj.static_as_json()
     return obj.as_json()
+
 
 def resolve_all():
     for k, cls in sorted(classes().items()):
