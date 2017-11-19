@@ -1,6 +1,5 @@
 from glob import iglob
 from os.path import realpath, dirname, join, basename, splitext
-from inspect import isclass
 
 __all__ = [
     splitext(i)[0] for i in map(
@@ -25,7 +24,7 @@ def classes():
 def as_json(obj):
     if isinstance(obj, frozenset):
         return list(obj)
-    elif isclass(obj):
+    elif isinstance(obj, type):
         return obj.static_as_json()
     return obj.as_json()
 
