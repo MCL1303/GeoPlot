@@ -20,6 +20,10 @@ class _geomobj:
     def load(element):
         raise NotImplementedError
 
+    @classmethod
+    def static_as_json(cls):
+        raise NotImplementedError
+
     def as_json(self):
         raise NotImplementedError
 
