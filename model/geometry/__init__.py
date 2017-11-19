@@ -24,5 +24,5 @@ def as_json(obj):
     return obj.as_json()
 
 def resolve_all():
-    for cls in _geomobj._geomobj.__subclasses__():
+    for k, cls in sorted(classes().items()):
         cls.resolve()

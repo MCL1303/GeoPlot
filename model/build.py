@@ -19,7 +19,7 @@ def main():
             raise TypeError("Error: Unknown tag '" + node.tagName + "'!")
     resolve_all()
     json.dump(
-        { k: list(v.instances.values()) for k, v in classes().items() if v.instances },
+        { k: list(map(lambda x: x[1], sorted(v.instances.items()))) for k, v in classes().items() if v.instances },
         sys.stdout,
         default=lambda o: as_json(o),
         sort_keys=True,
