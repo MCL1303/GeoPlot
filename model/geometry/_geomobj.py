@@ -36,7 +36,7 @@ class _geomobj:
 
     @classmethod
     def resolve(cls):
-        for i in list(cls.instances.values()):
+        for k, i in sorted(cls.instances.items()):
             i.resolve_one()
         for i in cls.unnamed_instances:
             i.resolve_one()
