@@ -23,10 +23,8 @@ class Segment(_geomobj):
         Segment.add(frozenset({ Point.add(a), Point.add(b) }))
 
     def as_json(self):
-        return {
-            "first_end": self.ends[0],
-            "second_end": self.ends[1]
-        }
+        return dict(zip(["first_end", "second_end"],
+            sorted(self.ends, key=lambda x: x.name)))
 
     def proceed(self):
         for i in self.ends:
