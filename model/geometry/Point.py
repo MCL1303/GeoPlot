@@ -16,6 +16,10 @@ class Point(_geomobj):
     instances = {}
     unnamed_instances = []
 
+    @classmethod
+    def static_as_json(cls):
+        return list(i[1] for i in sorted(cls.instances.items()))
+
     def as_json(self):
         return {
             "name": self.name,

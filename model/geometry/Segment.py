@@ -22,6 +22,11 @@ class Segment(_geomobj):
             a, b = None, None
         Segment.add(frozenset({ Point.add(a), Point.add(b) }))
 
+    @classmethod
+    def static_as_json(cls):
+        return list(sorted((i.as_json() for i in cls.instances.values()),
+            key=lambda x: x["first_end"].name + x["second_end"].name))
+
     def as_json(self):
         return dict(zip(["first_end", "second_end"],
             sorted(self.ends, key=lambda x: x.name)))
