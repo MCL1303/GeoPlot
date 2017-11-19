@@ -22,6 +22,7 @@ def main():
         { k: list(v.instances.values()) for k, v in classes().items() if v.instances },
         sys.stdout,
         default=lambda o: as_json(o),
+        sort_keys=True,
         indent=4
     )
 
