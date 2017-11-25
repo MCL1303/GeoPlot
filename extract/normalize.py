@@ -9,8 +9,8 @@ def main():
     outdoc = minidom.getDOMImplementation().createDocument(None, 'facts', None)
     if doc.documentElement.hasChildNodes():
         for node in (
-           doc.documentElement.firstChild.
-           firstChild.childNodes):
+           doc.documentElement.firstChild
+           .firstChild.childNodes):
             newnode = outdoc.createElement(node.tagName)
             for subnode in node.childNodes:
                 newnode.setAttribute(
