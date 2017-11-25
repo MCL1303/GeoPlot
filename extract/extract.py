@@ -27,7 +27,7 @@ def main():
             if shutil.which(x)
         )
     except StopIteration:
-        print("Error: tomita parser not found!")
+        print("Error: tomita parser", possible_commands, "not found!", file=sys.stderr)
         exit(1)
 
     mpath = os.path.join(program_dir, "..", "test", "data")
