@@ -1,0 +1,12 @@
+if [ -z "${tomita+xxx}" ]; then
+    tomita=`which tomitaparser tomita-linux32 tomita-linux64 tomita-mac tomita-freebsd64 | head -1`
+fi
+
+if [ -z "$tomita" ]; then
+    echo >&2 Error: tomita parser not found!
+    exit 1
+fi
+
+last_dir=`pwd`
+cd `dirname $0`
+$tomita config/config.proto < $last_dir/$1 | normalize.py > ../test/data/facts/`basename $1 .txt`.xml
