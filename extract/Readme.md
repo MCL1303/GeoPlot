@@ -1,4 +1,3 @@
-To get facts from files in `test/data/input` run `extract $files` (on UNIX run `./extract.py $files`).
-`$files` can be '\*'.
+To get facts from file run `extract-normalize %file%` (on UNIX run `./extract-normalize $file`).
 
-`tomitaparser` (or `tomita-$platformName`) **has to be** in PATH (`/usr/bin`)
+`tomitaparser` (or `tomita-$platformName`) **has to be** in PATH
