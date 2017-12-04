@@ -1,0 +1,1 @@
+To draw the model from file use `draw %file%` or `./draw $file` on UNIX
