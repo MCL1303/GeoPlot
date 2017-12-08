@@ -1,3 +1,2 @@
 import "Point.proto";
 import "Segment.proto";
-import "Triangle.proto";

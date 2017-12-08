@@ -2,7 +2,6 @@
 <facts>
   <Segment EndPoints="BC"/>
   <Point Name="F"/>
-  <Triangle Vertices="ABC"/>
   <Point Name="M"/>
   <Point Name="N"/>
   <Segment EndPoints="AB" Length="16"/>
