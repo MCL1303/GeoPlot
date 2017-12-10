@@ -20,8 +20,10 @@ class Point(_geomobj):
         self.y *= d.height
 
         d.arc(
-            (self.x - self.POINT_SIZE, self.y - self.POINT_SIZE,
-                self.x + self.POINT_SIZE, self.y + self.POINT_SIZE),
+            (
+                self.x - self.POINT_SIZE, self.y - self.POINT_SIZE,
+                self.x + self.POINT_SIZE, self.y + self.POINT_SIZE
+            ),
             0, 360, (0, 0, 0)
         )
         d.text(
