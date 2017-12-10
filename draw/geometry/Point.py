@@ -3,7 +3,6 @@ from ._geomobj import _geomobj
 
 class Point(_geomobj):
     POINT_SIZE = 2
-    TEXT_OFFSET = 20
 
     instances = {}
 
@@ -21,11 +20,13 @@ class Point(_geomobj):
         self.y *= d.height
 
         d.arc(
-            (self.x - self.POINT_SIZE, self.y - self.POINT_SIZE,
-                self.x + self.POINT_SIZE, self.y + self.POINT_SIZE),
+            (
+                self.x - self.POINT_SIZE, self.y - self.POINT_SIZE,
+                self.x + self.POINT_SIZE, self.y + self.POINT_SIZE
+            ),
             0, 360, (0, 0, 0)
         )
         d.text(
-            (self.x - self.TEXT_OFFSET, self.y - self.TEXT_OFFSET),
+            (self.x - d.fontSize / 2, self.y - d.fontSize / 2),
             self.name, (0, 0, 0), d.textFont
         )
