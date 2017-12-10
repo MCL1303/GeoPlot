@@ -21,7 +21,8 @@ def main():
     HEIGHT = 1024
     WIDTH = 1024
     POINT_SIZE = 2
-    
+
+    FONT_SIZE = 30
     if not sys.platform.startswith("win32"):
         font_destination = os.path.join(
             "usr", "share", "fonts",
@@ -29,13 +30,14 @@ def main():
         )
     else:
         font_destination = 'arial.ttf'
-    FONT = ImageFont.truetype(font_destination, 20)
+    FONT = ImageFont.truetype(font_destination, FONT_SIZE)
 
     out = Image.new('RGB', (HEIGHT, WIDTH), color=(255, 255, 255))
     d = ImageDraw.Draw(out)
 
     d.height = HEIGHT
     d.textFont = FONT
+    d.fontSize = FONT_SIZE
     d.width = WIDTH
     draw_all(d)
 
