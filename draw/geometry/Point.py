@@ -25,7 +25,6 @@ class Point(_geomobj):
             0, 360, (0, 0, 0)
         )
         d.text(
-            (self.x - d.fontSize / 2,
-            self.y - d.fontSize / 2),
+            (self.x - d.fontSize / 2, self.y - d.fontSize / 2),
             self.name, (0, 0, 0), d.textFont
         )
