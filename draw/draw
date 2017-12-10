@@ -1,2 +1,2 @@
-out_file=$(dirname $0)/pictures/$(basename $1 .json).png
+out_file=$(dirname $0)/../test/data/output/$(basename $1 .json).png
 $(dirname $0)/draw.py < $1 > $out_file
