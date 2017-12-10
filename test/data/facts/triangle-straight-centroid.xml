@@ -2,12 +2,9 @@
 <facts>
   <Segment EndPoints="MN" Length="6"/>
   <Segment EndPoints="NP" Length="3"/>
-  <Triangle Vertices="MNP"/>
   <Point Name="N"/>
   <Segment EndPoints="MP"/>
   <Point Name="K"/>
-  <Triangle Vertices="MNK"/>
   <Point Name="A"/>
   <Point Name="B"/>
-  <Triangle Vertices="NAB"/>
 </facts>

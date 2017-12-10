@@ -19,7 +19,3 @@ TAuxDicArticle "точка" {
 TAuxDicArticle "отрезок" {
   key = { "tomita:../grammars/Segment.cxx" type=CUSTOM }
 }
-
-TAuxDicArticle "треугольник" {
-  key = { "tomita:../grammars/Triangle.cxx" type=CUSTOM }
-}

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eu -o pipefail
 
-out_file=$(dirname $0)/models/$(basename $1 .xml).json
+out_file=$(dirname $0)/../test/data/models/$(basename $1 .xml).json
 $(dirname $0)/build.py < $1 > $out_file.tmp || ( rm $out_file.tmp; exit 1 )
 mv $out_file.tmp $out_file
